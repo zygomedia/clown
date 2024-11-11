@@ -1,12 +1,12 @@
 [package]
 name = "clown"
-version = "1.1.0"
+version = "1.1.1"
 edition = "2021"
 license = "MIT"
 description = "approximation of capture-by-closure lambdas"
 readme = "README.md"
-repository = "https://github.com/GRDigital/clown"
-authors = ["GR Digital <contact@grdigital.co.uk>"]
+repository = "https://github.com/zygomedia/clown"
+authors = ["Zygo Media <contact@zygomedia.com>"]
 
 [lib]
 proc-macro = true

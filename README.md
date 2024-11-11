@@ -8,12 +8,13 @@ Requires nightly and `#![feature(proc_macro_hygiene, stmt_expr_attributes)]`
 
 Turns this:
 ```rust
-#[clown] || do_call(honk!(foo.bar))
+#[clown] || do_call(honk!(foo.bar), slip!(baz.bop))
 ```
 into this:
 ```rust
 {
     let __honk_0 = (foo.bar).clone();
-    move || do_call(__honk_0)
+	let __slip_0 = baz.bop;
+    move || do_call(__honk_0, __slip_0)
 }
 ```

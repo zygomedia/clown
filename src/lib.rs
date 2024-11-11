@@ -85,7 +85,7 @@ impl syn::visit_mut::VisitMut for Clown {
 	}
 }
 
-/// expands `#[clown] || do_call(honk!(foo.bar))` to `{ let __honk_0 = (foo.bar).clone(); move || do_call(__honk_0) }` as some approximation of "capture-by-clone" closure
+/// expands `#[clown] || do_call(honk!(foo.bar), slip!(baz.bop))` to `{ let __honk_0 = (foo.bar).clone(); let __slip_0 = baz.bop; move || do_call(__honk_0, __slip_0) }` as some approximation of "capture-by-clone" closure
 #[proc_macro_attribute]
 pub fn clown(_: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
 	let mut item = syn::parse_macro_input!(item as syn::ExprClosure);
