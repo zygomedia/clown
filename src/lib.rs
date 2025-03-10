@@ -57,9 +57,8 @@ impl Clown {
 
 impl syn::visit_mut::VisitMut for Clown {
 	fn visit_macro_mut(&mut self, this_macro: &mut syn::Macro) {
-		let mut acc = TokenStream::new();
-		self.raw_tt_visit(this_macro.tokens.clone(), &mut acc);
-		this_macro.tokens = acc;
+		let this_macro_tokens = std::mem::take(&mut this_macro.tokens);
+		self.raw_tt_visit(this_macro_tokens, &mut this_macro.tokens);
 	}
 
 	fn visit_expr_mut(&mut self, this_expr: &mut syn::Expr) {
@@ -96,11 +95,9 @@ pub fn clown(_: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_
 	let honks = clown.honks.into_iter().map(|(ident, expr)| { let span = expr.span(); quote_spanned! {span=> let #ident = (#expr).clone();} });
 	let slips = clown.slips.into_iter().map(|(ident, expr)| { let span = expr.span(); quote_spanned! {span=> let #ident = #expr;} });
 
-	quote! {
-		{
-			#(#honks)*
-			#(#slips)*
-			#item
-		}
-	}.into()
+	quote! {{
+		#(#honks)*
+		#(#slips)*
+		#item
+	}}.into()
 }
