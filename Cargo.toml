@@ -12,7 +12,7 @@ authors = ["Zygo Media <contact@zygomedia.com>"]
 proc-macro = true
 
 [dependencies]
-itertools = "0.11"
+itertools = "0.14"
 proc-macro2 = "1"
 quote = "1"
 syn = { version = "2", features = ["visit-mut", "full", "parsing", "printing", "proc-macro"], default-features = false }
